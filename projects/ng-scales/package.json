@@ -1,10 +1,26 @@
 {
   "name": "ng-scales",
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "description": "A library for connecting to USB HID scales.",
+  "author": "Matthew Fors",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mattfors/ng-scales"
+  },
+  "bugs": {
+    "url": "https://github.com/mattfors/ng-scales/issues"
+  },
   "peerDependencies": {
     "@angular/common": "^17.3.0",
     "@angular/core": "^17.3.0"
   },
+  "keywords": [
+    "angular",
+    "javascript",
+    "typescript",
+    "HID",
+    "scales"
+  ],
   "dependencies": {
     "tslib": "^2.3.0"
   },
