@@ -13,5 +13,3 @@ export interface HardwareScaleInterface {
   close(): Observable<void>;
   reportEvent(): Observable<HardwareScaleReportEvent>;
 }
-
-export const NG_SCALE_HARDWARE: InjectionToken<HardwareScaleInterface> = new InjectionToken<HardwareScaleInterface>('HardwareScaleInterface');

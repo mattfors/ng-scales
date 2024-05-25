@@ -4,3 +4,4 @@
 
 export * from './lib/ng-scales.service';
 export * from './lib/connection-button-directive/ng-scales-connection-button.directive';
+export * from './lib/hardware/hardware-scale.interface'
