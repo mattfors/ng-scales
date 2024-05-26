@@ -28,7 +28,7 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build:ng-scales
-    - run: npm run build:showcase
+    - run: npm run build:showcase:gh-pages
     - name: Deploy Showcase to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4.6.1
       with:
