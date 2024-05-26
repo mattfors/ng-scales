@@ -7,8 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "build:showcase": "ng build --project showcase --prod",
-    "build:ng-scales": "ng build ng-scales --prod"
+    "build:showcase": "ng build showcase",
+    "build:ng-scales": "ng build ng-scales"
   },
   "private": true,
   "dependencies": {
