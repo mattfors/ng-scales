@@ -27,8 +27,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: npm build ng-scales
-    - run: npm build showcase
+    - run: ng build ng-scales
+    - run: ng build showcase
     - name: Deploy Showcase to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@4.1.6
       with:
