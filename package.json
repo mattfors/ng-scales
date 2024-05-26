@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "build:showcase": "ng build showcase",
-    "build:showcase:gh-pages": "ng build showcase --deploy-url /ng-scales/",
+    "build:showcase:gh-pages": "ng build showcase -base-href /ng-scales/",
     "build:ng-scales": "ng build ng-scales"
   },
   "private": true,
