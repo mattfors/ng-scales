@@ -27,5 +27,11 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+    - run: npm test showcase
+    - run: npm build showcase
+    - name: Deploy Showcase to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@4.1.6
+        with:
+          branch: gh-pages
+          folder: dist/showcase
+
