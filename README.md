@@ -1,5 +1,7 @@
 # ng-scales
-![example workflow](https://github.com/mattfors/ng-scales/actions/workflows/main.yml/badge.svg)
+![workflow](https://github.com/mattfors/ng-scales/actions/workflows/main.yml/badge.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 
 Angular library for connecting to USB scales
 
