@@ -1,8 +1,12 @@
 # ng-scales
 ![example workflow](https://github.com/mattfors/ng-scales/actions/workflows/main.yml/badge.svg)
-![Angular](https://img.shields.io/badge/angular-%23DD0031.svg?style=for-the-badge&logo=angular&logoColor=white)
 
-Ng-scales is an Angular library for connecting to USB scales
+Angular library for connecting to USB scales
+
+## Demo
+Check out the [live demo](https://mattfors.github.io/ng-scales/)
+
+
 ## Get started
 ### Installing
 Add the `npm` package to your app
