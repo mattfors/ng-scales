@@ -5,7 +5,7 @@ import {
   HardwareScaleReportEvent,
   NgScalesConnectionButtonDirective,
   NgScalesService,
-  provideNgScalesService,
+  provideNgScales,
   ScaleOutputDisplayComponent
 } from '../../../ng-scales/src';
 import { AsyncPipe } from '@angular/common';
@@ -16,9 +16,7 @@ import { AsyncPipe } from '@angular/common';
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, NgScalesConnectionButtonDirective, ScaleOutputDisplayComponent, AsyncPipe],
-  providers: [
-    provideNgScalesService()
-  ],
+  providers: [],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

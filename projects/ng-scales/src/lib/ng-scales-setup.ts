@@ -21,7 +21,7 @@ export interface NgScalesConfig {
   mappers: NgScalesMapperDefinition[];
 }
 
-export function provideNgScalesService(config: NgScalesConfig = {mappers:[]}): Provider[] {
+export function provideNgScales(config: NgScalesConfig = {mappers:[]}): Provider[] {
   return [
     NgScalesService,
     HidScaleMapperService,

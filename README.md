@@ -1,6 +1,66 @@
-# NgScales
+# ng-scales
+![example workflow](https://github.com/mattfors/ng-scales/actions/workflows/main.yml/badge.svg)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.7.
+Ng-scales is an Angular library for connecting to USB scales
+## Get started
+## Installing
+Add the `npm` package to your app
+```shell
+npm i ng-scales
+```
+
+## Using in angular application
+Add the providers in the `app.config.ts`
+```typescript
+providers: [
+  ...
+  provideNgScales()
+  ...
+]
+```
+
+The easiest way to integrate is the provided button directive which handles connecting and disconnecting from the scale. Add this into your template
+
+```html
+<button libNgScalesConnectionButton></button>
+```
+
+Import the component
+```typescript
+@Component({
+  ...
+  imports: [NgScalesConnectionButtonDirective]
+  ...
+})
+```
+
+### Built in support
+| Vendor | Vendor ID | Product | Product Id |                 Name                  | Verified |
+|:------:|:----------|:-------:|:-----------|:-------------------------------------:|:--------:|
+|  DYMO  | 2338     |   M25   | 32771      |  DYMO M25 25 Lb Digital Postal Scale  |    ✅     |
+
+### Adding support for additional scales
+You can add a new scale by providing additional mappers. The mapper function coverts the array buffer 
+
+```typescript
+  provideNgScales({mappers: [
+    {
+      vendorId: 2338,
+      productId: 32771,
+      mapper: (arrayBuffer: ArrayBuffer): HardwareScaleReportEvent => {
+        const d = new Uint8Array(arrayBuffer);
+        let weight = (d[3] + 256 * d[4])/10;
+        if (d[0] === 5) {
+          weight *= -1;
+        }
+        return {
+          units: d[1] === 2 ? 'grams' : 'ounces',
+          weight
+        };
+      }
+    }
+  ]})
+```
 
 ## Development server
 
