@@ -1,17 +1,34 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ScaleDisplayComponent } from '../scale-display/scale-display.component';
-import { NgScalesConnectionButtonDirective } from 'ng-scales';
+import { Observable } from 'rxjs';
+import {
+  HardwareScaleReportEvent,
+  NgScalesConnectionButtonDirective,
+  NgScalesService,
+  provideNgScalesService,
+  ScaleOutputDisplayComponent
+} from '../../../ng-scales/src';
+import { AsyncPipe } from '@angular/common';
 
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ScaleDisplayComponent, NgScalesConnectionButtonDirective],
+  imports: [RouterOutlet, NgScalesConnectionButtonDirective, ScaleOutputDisplayComponent, AsyncPipe],
+  providers: [
+    provideNgScalesService()
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'showcase';
+  zeroed$: Observable<boolean> = this.scale.zeroed;
+  reading$: Observable<boolean> = this.scale.reading;
+  report$: Observable<HardwareScaleReportEvent> = this.scale.reportEvent();
+
+  constructor(private scale: NgScalesService) {
+  }
+
+
 }

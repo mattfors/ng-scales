@@ -16,28 +16,29 @@ import {
 import { HardwareScaleInterface, HardwareScaleReportEvent } from './hardware-scale.interface';
 import { fromPromise } from 'rxjs/internal/observable/innerFrom';
 import { SUPPORTED_SCALES } from './hid-scale.constants';
-import { equalsHIDDevice, getHIDDataMapper } from './hid-scale.utils';
+import { equalsHIDDevice } from './hid-scale.utils';
+import { HidScaleMapperService } from './hid-scale-mapper.service';
+import { HidDataMapper } from '../ng-scales-setup';
 
 
-export type HidDataMapper = (arrayBuffer: ArrayBuffer) => HardwareScaleReportEvent;
-
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class HidScaleService implements HardwareScaleInterface {
 
-  private s: Subject<HardwareScaleReportEvent> = new Subject<HardwareScaleReportEvent>()
-  private c: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private _report: Subject<HardwareScaleReportEvent> = new Subject<HardwareScaleReportEvent>()
+  private _connected: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   private hidDevice!: HIDDevice;
   private subscriptions: Subscription = new Subscription();
 
-  reportEvent = () => this.s.asObservable();
-  readonly connected = this.c.asObservable();
+  reportEvent = () => this._report.asObservable();
+  readonly connected: Observable<boolean> = this._connected.asObservable();
   readonly supported: boolean = ('hid' in navigator);
 
+  constructor(private hidScaleMapperService: HidScaleMapperService) {
+  }
+
   open(): Observable<void> {
-    if (!this.supported || this.c.value) {
+    if (!this.supported || this._connected.value) {
       return of();
     }
     return from(navigator.hid.requestDevice({filters: SUPPORTED_SCALES}))
@@ -53,14 +54,15 @@ export class HidScaleService implements HardwareScaleInterface {
 
   private start(d: HIDDevice): void {
     this.hidDevice = d;
-    this.c.next(true);
+    this._connected.next(true);
+    const hidMapper: HidDataMapper = this.hidScaleMapperService.getHIDDataMapper(d)
     this.subscriptions.add(
       fromEvent<HIDInputReportEvent>(d, 'inputreport')
         .pipe(
-          map(e => getHIDDataMapper(d)(e.data.buffer)),
+          map(e => hidMapper(e.data.buffer)),
           distinctUntilKeyChanged('weight')
         ).subscribe(
-        e => this.s.next(e)
+        e => this._report.next(e)
       ));
 
     this.subscriptions.add(
@@ -68,14 +70,14 @@ export class HidScaleService implements HardwareScaleInterface {
         .pipe(
           filter(e => this.isOwnHidDevice(e.device)))
         .subscribe(dev => {
-          this.c.next(false);
+          this._connected.next(false);
           from(this.hidDevice.close()).subscribe();
         }));
   }
 
   close(): Observable<void> {
     this.subscriptions.unsubscribe();
-    this.c.next(false);
+    this._connected.next(false);
     return this.hidDevice ? from(this.hidDevice.close()) : of();
   }
 

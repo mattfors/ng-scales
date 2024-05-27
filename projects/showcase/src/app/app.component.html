@@ -1,2 +1,7 @@
 <button libNgScalesConnectionButton></button>
-<app-scale-display></app-scale-display>
+<lib-scale-output-display
+  [zeroed]="(zeroed$|async) || false"
+  [reading]="(reading$|async) || false"
+  [weight]="(report$|async)?.weight"
+  [units]="(report$|async)?.units || ''"
+></lib-scale-output-display>

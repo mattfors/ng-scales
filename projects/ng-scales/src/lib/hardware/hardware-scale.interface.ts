@@ -1,6 +1,9 @@
 import { Observable } from 'rxjs';
 import { InjectionToken } from '@angular/core';
 
+export const HARDWARE_SCALE_INTERFACE = new InjectionToken<HardwareScaleInterface>('HardwareScaleInterface');
+
+
 export interface HardwareScaleReportEvent {
   weight: number;
   units?: string;

@@ -9,7 +9,8 @@
     "test": "ng test",
     "build:showcase": "ng build showcase",
     "build:showcase:gh-pages": "ng build showcase --base-href=/ng-scales/",
-    "build:ng-scales": "ng build ng-scales"
+    "build:ng-scales": "ng build ng-scales",
+    "test:ng-scales": "ng test ng-scales --watch=false --browsers ChromeHeadless"
   },
   "private": true,
   "dependencies": {
@@ -30,6 +31,7 @@
     "@angular/cli": "^17.3.7",
     "@angular/compiler-cli": "^17.3.0",
     "@types/jasmine": "~5.1.0",
+    "@types/w3c-web-hid": "^1.0.6",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
@@ -37,7 +39,6 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "ng-packagr": "^17.3.0",
-    "typescript": "~5.4.2",
-    "@types/w3c-web-hid": "^1.0.6"
+    "typescript": "~5.4.2"
   }
 }

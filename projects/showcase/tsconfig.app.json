@@ -2,7 +2,8 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../out-tsc/app"
+    "outDir": "../../out-tsc/app",
+    "types": ["w3c-web-hid"]
   },
   "files": [
     "src/main.ts"

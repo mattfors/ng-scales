@@ -1,6 +1,11 @@
 import { Directive, ElementRef, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { combineLatest, Subscription } from 'rxjs';
 import { NgScalesService } from '../ng-scales.service';
+
+const NOT_SUPPORTED: string = "Not Supported";
+const DISCONNECT: string = "Disconnect";
+const CONNECT: string = "Connect";
+const RECONNECT: string = "Reconnect";
 
 @Directive({
   selector: '[libNgScalesConnectionButton]',
@@ -10,16 +15,17 @@ export class NgScalesConnectionButtonDirective implements OnInit, OnDestroy {
 
   private sub!: Subscription;
   private previouslyConnected: boolean = false;
-  constructor(private el: ElementRef, private scale: NgScalesService) {}
+  constructor(private el: ElementRef,
+              private scale: NgScalesService) {}
 
   ngOnInit(): void {
-    if (this.scale.supported) {
-      this.sub = this.scale.connected.subscribe(c =>
-        this.text = this.getDisplayText(c, this.previouslyConnected));
-    } else {
-      this.text = 'Not Supported'
-      this.el.nativeElement.disabled = true;
-    }
+    this.sub = combineLatest([this.scale.connected, this.scale.supported])
+      .subscribe(([connected, supported]) => {
+        this.text = this.getDisplayText(connected, supported, this.previouslyConnected);
+        if (!supported) {
+          this.el.nativeElement.disabled = true;
+        }
+    })
   }
 
   ngOnDestroy(): void {
@@ -29,21 +35,23 @@ export class NgScalesConnectionButtonDirective implements OnInit, OnDestroy {
   }
 
   @HostListener('click') onClick() {
-    if (this.text === 'Disconnect') {
+    if (this.text === DISCONNECT) {
       this.scale.close().subscribe();
-    } else if (this.text === 'Connect' || this.text === 'Reconnect') {
+    } else {
       this.scale.open().subscribe(() => this.previouslyConnected = true);
     }
   }
 
-  private getDisplayText(connected: boolean, previously: boolean): string {
+  private getDisplayText(connected: boolean, supported: boolean, previously: boolean): string {
     switch (true) {
+      case !supported:
+        return NOT_SUPPORTED;
       case connected:
-        return 'Disconnect';
+        return DISCONNECT;
       case previously && !connected:
-        return 'Reconnect';
+        return RECONNECT;
       default:
-        return 'Connect';
+        return CONNECT;
     }
   }
 
