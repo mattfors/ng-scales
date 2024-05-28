@@ -1,5 +1,6 @@
 # ng-scales
 ![workflow](https://github.com/mattfors/ng-scales/actions/workflows/main.yml/badge.svg)
+![Known Vulnerabilities](https://snyk.io/test/github/mattfors/ng-scales/badge.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 
