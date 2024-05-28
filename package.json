@@ -10,7 +10,7 @@
     "build:showcase": "ng build showcase",
     "build:showcase:gh-pages": "ng build showcase --base-href=/ng-scales/",
     "build:ng-scales": "ng build ng-scales",
-    "test:ng-scales": "ng test ng-scales --watch=false --browsers ChromeHeadless"
+    "test:ng-scales": "ng test ng-scales --watch=false --browsers ChromeHeadless --code-coverage"
   },
   "private": true,
   "dependencies": {
