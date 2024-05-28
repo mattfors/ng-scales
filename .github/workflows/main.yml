@@ -30,13 +30,13 @@ jobs:
     - run: npm run test:ng-scales
     - run: npm run build:ng-scales
     - run: npm run build:showcase:gh-pages
+    - run: npm run make-badges
+    - run: mv dist/coverage-badges.svg dist/showcase/browser/
 
     - name: Deploy Showcase to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4.6.1
       with:
         branch: gh-pages
         folder: dist/showcase/browser
-    - name: Coverage Badge
-      uses: we-cli/coverage-badge-action@v1.0.1
 
 

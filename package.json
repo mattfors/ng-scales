@@ -10,7 +10,8 @@
     "build:showcase": "ng build showcase",
     "build:showcase:gh-pages": "ng build showcase --base-href=/ng-scales/",
     "build:ng-scales": "ng build ng-scales",
-    "test:ng-scales": "ng test ng-scales --watch=false --browsers ChromeHeadless --code-coverage"
+    "test:ng-scales": "ng test ng-scales --watch=false --browsers ChromeHeadless --code-coverage",
+    "make-badges": "coverage-badges --source coverage/ng-scales/coverage-summary.json --output dist/coverage-badges.svg"
   },
   "private": true,
   "dependencies": {
@@ -22,6 +23,7 @@
     "@angular/platform-browser": "^17.3.0",
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
+    "coverage-badges-cli": "^2.0.0",
     "ng-scales": "^0.0.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
