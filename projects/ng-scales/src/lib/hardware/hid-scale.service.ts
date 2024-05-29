@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {
   BehaviorSubject,
   distinctUntilKeyChanged,
-  filter,
   from,
   fromEvent,
   map,
@@ -18,7 +17,6 @@ import {
   HardwareScaleReportEvent,
 } from './hardware-scale.interface';
 import { fromPromise } from 'rxjs/internal/observable/innerFrom';
-import { equalsHIDDevice } from './hid-scale.utils';
 import { HidScaleMapperService } from './hid-scale-mapper.service';
 import { HidDataMapper } from '../ng-scales-setup';
 import { NavigatorService } from './navigator.service';
@@ -28,13 +26,14 @@ import { SUPPORTED_SCALES } from './hid-scale-mapper-config';
 export class HidScaleService implements HardwareScaleInterface {
   private _report: Subject<HardwareScaleReportEvent> =
     new Subject<HardwareScaleReportEvent>();
+
   private _connected: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false,
   );
 
   private hidDevice!: HIDDevice;
-
-  private subscriptions: Subscription = new Subscription();
+  private inputReportSub!: Subscription;
+  private disconnectSub!: Subscription;
 
   reportEvent = () => this._report.asObservable();
   readonly connected: Observable<boolean> = this._connected.asObservable();
@@ -63,32 +62,29 @@ export class HidScaleService implements HardwareScaleInterface {
     this._connected.next(true);
     const hidMapper: HidDataMapper =
       this.hidScaleMapperService.getHIDDataMapper(d);
-    this.subscriptions.add(
-      fromEvent<HIDInputReportEvent>(d, 'inputreport')
-        .pipe(
-          map((e) => hidMapper(e.data.buffer)),
-          distinctUntilKeyChanged('weight'),
-        )
-        .subscribe((e) => this._report.next(e)),
-    );
-    this.subscriptions.add(
-      this.navigatorService
-        .addHidEventListener('disconnect')
-        .pipe(filter((e) => this.isOwnHidDevice(e.device)))
-        .subscribe(() => {
-          this._connected.next(false);
-          from(this.hidDevice.close()).subscribe();
-        }),
-    );
+
+    this.inputReportSub = this.inputReportListener(d)
+      .pipe(
+        map((e) => hidMapper(e.data.buffer)),
+        distinctUntilKeyChanged('weight'),
+      )
+      .subscribe((e) => this._report.next(e));
+
+    this.disconnectSub = this.navigatorService
+      .disconnectListenerForDevice(d)
+      .subscribe(() => this.close());
+  }
+
+  private inputReportListener(
+    device: HIDDevice,
+  ): Observable<HIDInputReportEvent> {
+    return fromEvent<HIDInputReportEvent>(device, 'inputreport');
   }
 
   close(): Observable<void> {
-    this.subscriptions.unsubscribe();
+    if (this.inputReportSub) this.inputReportSub.unsubscribe();
+    if (this.disconnectSub) this.disconnectSub.unsubscribe();
     this._connected.next(false);
     return this.hidDevice ? from(this.hidDevice.close()) : of();
-  }
-
-  private isOwnHidDevice(d: HIDDevice): boolean {
-    return this.hidDevice && equalsHIDDevice(this.hidDevice, d);
   }
 }

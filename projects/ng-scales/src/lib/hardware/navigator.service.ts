@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { filter, from, fromEvent, map, Observable, of } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
+import { equalsHIDDevice } from './hid-scale.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -31,5 +32,17 @@ export class NavigatorService {
     return this.navigator
       ? fromEvent<HIDInputReportEvent>(this.navigator.hid, eventName)
       : of();
+  }
+
+  disconnectListener(): Observable<HIDInputReportEvent> {
+    return this.addHidEventListener('disconnect');
+  }
+
+  disconnectListenerForDevice(
+    device: HIDDevice,
+  ): Observable<HIDInputReportEvent> {
+    return this.disconnectListener().pipe(
+      filter((e) => equalsHIDDevice(device, e.device)),
+    );
   }
 }

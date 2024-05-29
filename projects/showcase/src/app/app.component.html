@@ -1,7 +1,15 @@
-<button libNgScalesConnectionButton></button>
-<lib-scale-output-display
-  [zeroed]="(zeroed$|async) || false"
-  [reading]="(reading$|async) || false"
-  [weight]="(report$|async)?.weight"
-  [units]="(report$|async)?.units || ''"
-></lib-scale-output-display>
+<div class="showcase-container">
+  <div class="showcase-display">
+    <lib-scale-output-display
+      [zeroed]="(zeroed$|async) || false"
+      [reading]="(reading$|async) || false"
+      [weight]="(report$|async)?.weight"
+      [units]="(report$|async)?.units || ''"
+    ></lib-scale-output-display>
+  </div>
+  <div class="showcase-toolbar">
+    <button libNgScalesConnectionButton></button>
+  </div>
+</div>
+
+
