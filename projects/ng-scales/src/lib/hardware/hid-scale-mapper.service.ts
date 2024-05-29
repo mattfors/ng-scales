@@ -1,7 +1,7 @@
 import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
-import { DEFAULT_MAPPER } from './hid-scale.constants';
 import { equalsHIDDevice } from './hid-scale.utils';
 import { HidDataMapper, NgScalesMapperDefinition } from '../ng-scales-setup';
+import { DEFAULT_MAPPER } from './hid-scale-mapper-config';
 
 export const HID_SCALE_MAPPERS: InjectionToken<NgScalesMapperDefinition[]>
   = new InjectionToken<NgScalesMapperDefinition[]>('HidScaleMappers');

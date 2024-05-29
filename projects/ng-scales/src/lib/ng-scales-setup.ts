@@ -2,11 +2,12 @@ import { NgScalesService } from './ng-scales.service';
 import { HidScaleService } from './hardware/hid-scale.service';
 import { Provider } from '@angular/core';
 import { HARDWARE_SCALE_INTERFACE, HardwareScaleReportEvent } from './hardware/hardware-scale.interface';
-import {  SUPPORTED_SCALES } from './hardware/hid-scale.constants';
+
 import {
   HID_SCALE_MAPPERS,
   HidScaleMapperService,
 } from './hardware/hid-scale-mapper.service';
+import { SUPPORTED_SCALES } from './hardware/hid-scale-mapper-config';
 
 export type NgScalesDataMapper = (arrayBuffer: ArrayBuffer) => HardwareScaleReportEvent;
 export type HidDataMapper = (arrayBuffer: ArrayBuffer) => HardwareScaleReportEvent;

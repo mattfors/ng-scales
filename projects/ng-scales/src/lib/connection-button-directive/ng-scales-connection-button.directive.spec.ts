@@ -33,11 +33,11 @@ describe('NgScalesConnectionButtonDirective', () => {
     expect(de.nativeElement.textContent).toEqual('Disconnect');
   });
 
-  it('should set text to Reconnect when connected and then disconnected', fakeAsync(() => {
+  it('should set text to Reconnect when connected and then disconnected',() => {
     de.nativeElement.click();
     de.nativeElement.click();
     expect(de.nativeElement.textContent).toEqual('Reconnect');
-  }));
+  });
 });
 
 @Component({

@@ -3,9 +3,8 @@ import { HARDWARE_SCALE_INTERFACE, HardwareScaleInterface, HardwareScaleReportEv
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { NgScalesService } from '../ng-scales.service';
 import { HID_SCALE_MAPPERS, HidScaleMapperService } from './hid-scale-mapper.service';
-import { HidScaleService } from './hid-scale.service';
-import { SUPPORTED_SCALES } from './hid-scale.constants';
-import { NgScalesConfig } from '../ng-scales-setup';
+import { SUPPORTED_SCALES } from './hid-scale-mapper-config';
+
 
 @Injectable()
 export class MockScaleService implements HardwareScaleInterface {
@@ -40,6 +39,10 @@ export function provideNgScalesForTest(): Provider[] {
     {
       provide: HARDWARE_SCALE_INTERFACE,
       useClass: MockScaleService
+    },
+    {
+      provide: HID_SCALE_MAPPERS,
+      useValue: SUPPORTED_SCALES
     }
   ];
 }
