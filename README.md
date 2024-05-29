@@ -1,6 +1,8 @@
 # ng-scales
+[![npm version](https://badge.fury.io/js/ng-scales.svg)](https://badge.fury.io/js/ng-scales)
 ![workflow](https://github.com/mattfors/ng-scales/actions/workflows/main.yml/badge.svg)
 ![Coverage](https://mattfors.github.io/ng-scales/coverage-badges.svg)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 ![Known Vulnerabilities](https://snyk.io/test/github/mattfors/ng-scales/badge.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
