@@ -17,8 +17,8 @@ describe('HidScaleService', () => {
       providers: [
         HidScaleService,
         HidScaleMapperService,
-        provideNgScalesForTest()
-      ]
+        provideNgScalesForTest(),
+      ],
     });
     service = TestBed.inject(HidScaleService);
     navigatorService = TestBed.inject(NavigatorService);
@@ -26,12 +26,17 @@ describe('HidScaleService', () => {
     spyOn(navigatorService, 'addHidEventListener').and.returnValue(of());
 
     mockHIDDevice = jasmine.createSpyObj('HIDDevice', [
-      'open', 'close', 'addEventListener', 'removeEventListener'
+      'open',
+      'close',
+      'addEventListener',
+      'removeEventListener',
     ]);
     mockHIDDevice.open.and.returnValue(Promise.resolve());
     mockHIDDevice.close.and.returnValue(Promise.resolve());
 
-    spyOn(navigatorService, 'requestDevices').and.returnValue(of([mockHIDDevice] as HIDDevice[]));
+    spyOn(navigatorService, 'requestDevices').and.returnValue(
+      of([mockHIDDevice] as HIDDevice[]),
+    );
   });
 
   it('should be created', () => {
@@ -40,31 +45,35 @@ describe('HidScaleService', () => {
 
   it('should open device and add listeners', (done: DoneFn) => {
     service.open().subscribe(() => {
-      service.connected.subscribe(c => {
+      service.connected.subscribe((c) => {
         expect(c).toBeTrue();
         service.open().subscribe();
         expect(mockHIDDevice.open).toHaveBeenCalled();
         expect(mockHIDDevice.addEventListener).toHaveBeenCalledTimes(1);
-        expect(mockHIDDevice.addEventListener).toHaveBeenCalledWith('inputreport', jasmine.any(Function), undefined);
+        expect(mockHIDDevice.addEventListener).toHaveBeenCalledWith(
+          'inputreport',
+          jasmine.any(Function),
+          undefined,
+        );
 
         expect(navigatorService.addHidEventListener).toHaveBeenCalledTimes(1);
-        expect(navigatorService.addHidEventListener).toHaveBeenCalledWith('disconnect');
+        expect(navigatorService.addHidEventListener).toHaveBeenCalledWith(
+          'disconnect',
+        );
         done();
       });
-    })
+    });
   });
 
   it('should close device and remove listeners', (done: DoneFn) => {
     service.open().subscribe(() => {
       service.close().subscribe(() => {
-        service.connected.subscribe(c => {
+        service.connected.subscribe((c) => {
           expect(mockHIDDevice.close).toHaveBeenCalled();
           expect(c).toBeFalse();
           done();
-        })
-      })
+        });
+      });
     });
-
   });
-
 });

@@ -1,11 +1,11 @@
 export function equalsHIDDevice(
-  a: {vendorId: number, productId: number},
-  b: {vendorId: number, productId: number}): boolean {
+  a: { vendorId: number; productId: number },
+  b: { vendorId: number; productId: number },
+): boolean {
   return a.vendorId === b.vendorId && a.productId === b.productId;
 }
 
-
-export const shiftDecimalPlaces = (number: number, shift: number): number =>  {
+export const shiftDecimalPlaces = (number: number, shift: number): number => {
   let result: number;
   if (shift > 0) {
     result = number * Math.pow(10, shift);
@@ -15,4 +15,4 @@ export const shiftDecimalPlaces = (number: number, shift: number): number =>  {
     result = number;
   }
   return result;
-}
+};

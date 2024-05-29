@@ -7,7 +7,7 @@ describe('HidScaleMapperService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [HidScaleMapperService]
+      providers: [HidScaleMapperService],
     });
     service = TestBed.inject(HidScaleMapperService);
   });

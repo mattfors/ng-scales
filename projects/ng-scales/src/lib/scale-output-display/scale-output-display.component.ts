@@ -5,10 +5,9 @@ import { Component, Input } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './scale-output-display.component.html',
-  styleUrl: './scale-output-display.component.css'
+  styleUrl: './scale-output-display.component.css',
 })
 export class ScaleOutputDisplayComponent {
-
   @Input()
   zeroed!: boolean;
 
@@ -20,6 +19,4 @@ export class ScaleOutputDisplayComponent {
 
   @Input()
   units!: string | undefined;
-
-
 }

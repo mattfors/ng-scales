@@ -8,10 +8,9 @@ describe('ScaleOutputDisplayComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ScaleOutputDisplayComponent]
-    })
-    .compileComponents();
-    
+      imports: [ScaleOutputDisplayComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ScaleOutputDisplayComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

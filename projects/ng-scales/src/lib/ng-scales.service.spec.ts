@@ -8,7 +8,7 @@ describe('NgScalesService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideNgScalesForTest()]
+      providers: [provideNgScalesForTest()],
     });
     service = TestBed.inject(NgScalesService);
   });
