@@ -1,0 +1,7 @@
+<div>
+  <button (click)="connect()" *ngIf="!connected">Connect</button>
+  <button (click)="close()" *ngIf="connected">Close</button>
+  <input [(ngModel)]="serialCommand" placeholder="Enter command" />
+  <button (click)="write()">Send</button>
+</div>
+<textarea #dataTextarea [value]="accumulatedData" rows="20" cols="80" readonly></textarea>

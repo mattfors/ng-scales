@@ -8,11 +8,13 @@ import { equalsHIDDevice } from './hid-scale.utils';
 })
 export class NavigatorService {
   readonly navigator: Navigator | undefined;
-  readonly supported: boolean;
+  readonly hidSupported: boolean;
+  readonly serialSupported: boolean;
 
   constructor(@Inject(DOCUMENT) private document: Document) {
     this.navigator = this.document?.defaultView?.navigator;
-    this.supported = !!this.navigator && 'hid' in this.navigator;
+    this.hidSupported = !!this.navigator && 'hid' in this.navigator;
+    this.serialSupported = !!this.navigator && 'serial' in this.navigator;
   }
 
   requestDevice(filters: HIDDeviceFilter[]): Observable<HIDDevice> {
@@ -44,5 +46,13 @@ export class NavigatorService {
     return this.disconnectListener().pipe(
       filter((e) => equalsHIDDevice(device, e.device)),
     );
+  }
+
+  requestPort(options?: SerialPortRequestOptions): Promise<SerialPort> {
+    if (this.navigator?.serial) {
+      return this.navigator.serial.requestPort(options);
+    } else {
+      return Promise.reject(new Error('Navigator or Serial API not supported'));
+    }
   }
 }

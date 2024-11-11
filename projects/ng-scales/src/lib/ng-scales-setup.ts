@@ -11,6 +11,8 @@ import {
   HidScaleMapperService,
 } from './hardware/hid-scale-mapper.service';
 import { SUPPORTED_SCALES } from './hardware/hid-scale-mapper-config';
+import { SerialScaleService } from './hardware/serial-scale.service';
+import { SerialService } from './hardware/serial.service';
 
 export type NgScalesDataMapper = (
   arrayBuffer: ArrayBuffer,
@@ -38,7 +40,7 @@ export function provideNgScales(
     {
       /* My intention is to support serial scales in the future */
       provide: HARDWARE_SCALE_INTERFACE,
-      useClass: HidScaleService,
+      useClass: SerialService,
     },
     {
       provide: HID_SCALE_MAPPERS,

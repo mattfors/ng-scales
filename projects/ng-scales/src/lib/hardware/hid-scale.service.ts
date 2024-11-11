@@ -43,7 +43,7 @@ export class HidScaleService implements HardwareScaleInterface {
     private hidScaleMapperService: HidScaleMapperService,
     private navigatorService: NavigatorService,
   ) {
-    this.supported = this.navigatorService.supported;
+    this.supported = this.navigatorService.hidSupported;
   }
 
   open(): Observable<void> {
